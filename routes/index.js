@@ -7,7 +7,7 @@ let storage = {}
 router.get('/', (req, res) => {
 	console.log('sending back the storage with content');
 	console.log(storage)
-	res.json(storage)
+	res.render('index', {title: 'Express'});
 });
 
 

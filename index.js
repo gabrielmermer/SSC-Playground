@@ -3,6 +3,11 @@ const app = express()
 const port = 3000
 
 const path = require('path');
+const ejs = require('ejs');
+
+// view engine setup - ejs
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // JSON parsing
 const bodyParser = require('body-parser');
