@@ -9,6 +9,9 @@ const ejs = require('ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// database file
+const db = require('./services/database.js');
+
 // JSON parsing
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
