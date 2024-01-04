@@ -1,6 +1,5 @@
 const db = require('../services/database.js').config;
 
-let users = [];
 
 
 let getUsers = () => new Promise((resolve, reject) => {
@@ -52,7 +51,7 @@ let updateUser = (userData) => new Promise((resolve, reject)=> {
 		", surname = " + db.escape(userData.surname) +
 		", hero = " + db.escape(userData.hero) +
 		", email = " + db.escape(userData.email) +
-		", info = " + db.escape(userData.info) + "WHERE id = " + parseInt(userData.id);
+		", info = " + db.escape(userData.info) + 
 		"WHERE id = " + parseInt(userData.id);
 	console.log(sql);
 	db.query(sql, function (err, result, fields){
@@ -64,8 +63,48 @@ let updateUser = (userData) => new Promise((resolve, reject)=> {
 	})
 })
 
+const registerUser = async (formData) => {
+	try {
+	  const sql = `INSERT INTO users (name, surname, hero, email, info, password) VALUES (?, ?, ?, ?, ?, ?)`;
+	  const values = [
+		formData.name,
+		formData.surname,
+		formData.hero,
+		formData.email,
+		formData.info,
+		formData.password
+	  ];
+  
+	  console.log(sql);
+  
+	  const result = await new Promise((resolve, reject) => {
+		db.query(sql, values, (err, result) => {
+		  if (err) {
+			reject(err);
+			return; // Exit the callback function on error
+		  }
+  
+		  if (result) {
+			console.log(result.affectedRows + " rows have been affected");
+			resolve(result.insertId); // Resolve with the insertId if available
+		  } else {
+			console.log("No result returned");
+			resolve(null); // Resolve with null if no result is available
+		  }
+		});
+	  });
+  
+	  return result;
+	} catch (error) {
+	  console.log('Error:', error);
+	  throw error;
+	}
+  };
+  
+
 module.exports = {
 	getUsers,
 	getUser,
-	updateUser
+	updateUser,
+	registerUser
 }

@@ -20,7 +20,6 @@ function getUser(req, res, next) {
 
 function editUser(req, res, next) {
 	userModel.getUser(req.params.id)
-		.then (console.log('edit page loaded'))
 		.then(user => res.render('editUser', {user}))
 		.catch(error => res.sendStatus(500))
 }
@@ -31,11 +30,17 @@ function updateUser(req, res, next) {
 		.catch(error => res.sendStatus(500))
 }
 
+function registerUser(req, res, next) {
+	userModel.registerUser(req.body)
+	.then(() => res.sendStatus(200))
+	.catch(error => res.sendStatus(500))
+}
+
 // exporting those two functions, probably to the router
 module.exports = {
 	getUsers,
 	getUser,
 	editUser,
-	updateUser
-
+	updateUser,
+	registerUser
 }

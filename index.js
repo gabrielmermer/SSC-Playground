@@ -12,6 +12,9 @@ app.set('view engine', 'ejs');
 // database file
 const db = require('./services/database.js');
 
+// websockets file
+const ws = require('./services/websockets.js');
+
 // JSON parsing
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
